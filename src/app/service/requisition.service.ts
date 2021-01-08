@@ -14,7 +14,12 @@ export class RequisitionService  extends EntityCollectionServiceBase<Requisition
       id: 'PR_001',
       title: 'First Requisition',
       status: 'draft',
-      total: 0,
+      total: 10,
+    }, {
+      id: 'PR_002',
+      title: 'Second Requisition',
+      status: 'draft',
+      total: 42,
     }]);
 
   }
