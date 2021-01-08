@@ -9,6 +9,7 @@ import { EntityDataModule } from '@ngrx/data';
 import { entityConfig } from './entity-metadata';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { StoreModule } from '@ngrx/store';
     BrowserAnimationsModule,
     EntityDataModule.forRoot(entityConfig),
     EffectsModule.forRoot([]),
-    StoreModule.forRoot({}, {})
+    StoreModule.forRoot({}, {}),
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
