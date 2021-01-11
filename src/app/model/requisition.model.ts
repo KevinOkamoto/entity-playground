@@ -1,7 +1,7 @@
 export type RequisitionStatus = 'draft' | 'submitted' | 'approved';
 
 export interface Requisition {
-  id: string;
+  id?: string;
   title: string;
   status: RequisitionStatus;
   total: number;
