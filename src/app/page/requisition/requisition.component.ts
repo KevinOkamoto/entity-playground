@@ -17,6 +17,7 @@ export class RequisitionComponent implements OnInit {
   entityService: EntityService<Requisition>;
 
   form: FormGroup = new FormGroup({
+    id: new FormControl(),
     title: new FormControl(),
     status: new FormControl(),
   });
@@ -35,6 +36,9 @@ export class RequisitionComponent implements OnInit {
       this.entityService.connectById(this.id)
       .subscribe(req => {
         this.req = req;
+        if (req) {
+          this.form.patchValue(req);
+        }
       });
 
       this.entityService.getByKey(this.id);
@@ -42,8 +46,7 @@ export class RequisitionComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.req.title = this.form.value.title;
-    this.entityService.save(this.req);
+    this.entityService.save(this.form.getRawValue());
   }
 
 }

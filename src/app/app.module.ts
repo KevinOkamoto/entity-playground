@@ -35,10 +35,10 @@ const defaultDateServiceConfig: DefaultDataServiceConfig = {
     EffectsModule.forRoot([]),
     StoreModule.forRoot({}, {}),
     EntityDataModule.forRoot(entityConfig),
-    // StoreDevtoolsModule.instrument({
-    //   maxAge: 25,
-    //   logOnly: environment.production,
-    // }),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      logOnly: environment.production,
+    }),
     HttpClientModule
   ],
   providers: [

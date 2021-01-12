@@ -3,6 +3,7 @@
 <p>{{req?.title}}</p>
 
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <input type="hidden" name="id" formControlName="id">
   <label for="title">Title:</label>
   <input type="text" name="title" formControlName="title">
   <button type="submit">Save</button>

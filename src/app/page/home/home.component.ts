@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { EntityService, EntityServiceBuilderService } from 'src/app/service/entity-builder.service';
 import { Requisition } from '../../model/requisition.model';
-import { RequisitionService } from '../../service/requisition.service';
 
 @Component({
   selector: 'app-home',
