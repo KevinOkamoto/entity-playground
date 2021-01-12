@@ -1,0 +1,16 @@
+{
+  "requisitions": [
+    {
+      "id": "PR_001",
+      "title": "My First Requisition",
+      "status": "draft",
+      "total": 10
+    },
+    {
+      "id": "PR_002",
+      "title": "Second Requisition",
+      "status": "draft",
+      "total": 42
+    }
+  ]
+}

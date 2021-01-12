@@ -3,7 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Requisition } from 'src/app/model/requisition.model';
-import { RequisitionModel, RequisitionService } from 'src/app/service/requisition.service';
+import { RequisitionService } from 'src/app/service/requisition.service';
 
 @Component({
   selector: 'app-requisition',
@@ -13,7 +13,7 @@ import { RequisitionModel, RequisitionService } from 'src/app/service/requisitio
 export class RequisitionComponent implements OnInit {
 
   id: string;
-  req: RequisitionModel;
+  req: Requisition;
   requisitions$: Observable<Requisition[]>;
 
   form: FormGroup = new FormGroup({
@@ -30,18 +30,19 @@ export class RequisitionComponent implements OnInit {
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       this.id = params.get('id');
-      this.requisitionService.getByKey(this.id);
 
       this.requisitionService.connectById(this.id)
       .subscribe(req => {
         this.req = req;
       });
 
+      this.requisitionService.getByKey(this.id);
     });
   }
 
   onSubmit(): void {
-    console.log(this.form.value);
+    this.req.title = this.form.value.title;
+    this.requisitionService.save(this.req);
   }
 
 }

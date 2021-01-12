@@ -1,66 +1,59 @@
 import { Injectable } from '@angular/core';
 import { EntityCollectionServiceBase, EntityCollectionServiceElementsFactory } from '@ngrx/data';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Requisition, RequisitionStatus } from '../model/requisition.model';
+import { Requisition } from '../model/requisition.model';
+
+export interface EntityChange<T> {
+  target: T;
+  prop: string;
+  value: any;
+}
 
 @Injectable({ providedIn: 'root' })
 export class RequisitionService  extends EntityCollectionServiceBase<Requisition> {
+
+  public entityChange$: Subject<EntityChange<Requisition>> = new Subject();
+
   constructor(serviceElementsFactory: EntityCollectionServiceElementsFactory) {
     super('Requisition', serviceElementsFactory);
-    this.initializeStore();
   }
 
-  connectById(id: string): Observable<RequisitionModel> {
+  connectById(id: string): Observable<Requisition> {
     return this.collection$.pipe(
-      map(collection => new RequisitionModel(collection.entities[id], this)),
+      map(collection => {
+        if (collection.entities[id]) {
+          const target = Object.assign({}, collection.entities[id]);
+          return new Proxy(target, this._createProxyHandler());
+        }
+        return null;
+      }),
     );
   }
 
-  private initializeStore(): void {
-    this.addManyToCache([{
-      id: 'PR_001',
-      title: 'First Requisition',
-      status: 'draft',
-      total: 10,
-    }, {
-      id: 'PR_002',
-      title: 'Second Requisition',
-      status: 'draft',
-      total: 42,
-    }]);
+  save(req: Requisition): void {
+    this.update(req);
   }
-}
 
-export class ObjectModel<T> {
-
-  constructor(
-    protected object: T,
-    protected service: EntityCollectionServiceBase<T>,
-  ) { }
-
-  save(): void {
-    // save model to store -> call ngrx co
-    this.service.update(this.object);
+  private _createProxyHandler(): any {
+    const handler = {
+      set: (target, prop, value): boolean => {
+        this._triggerHooks(target, prop, value);
+        target[prop] = value;
+        return true;
+      }
+    };
+    return handler;
   }
-}
 
-export class RequisitionModel extends ObjectModel<Requisition> {
-  id: string;
-  title: string;
-  status: RequisitionStatus;
-  total: number;
+  private _triggerHooks(target: Requisition, prop: string, value: any): void {
+    this._log(prop, value);
+    // broadcast an entity change event
+    this.entityChange$.next({ target, prop, value});
+  }
 
-  constructor(
-    protected object: Requisition,
-    protected service: EntityCollectionServiceBase<Requisition>,
-  ) {
-    super(object, service);
-    this.id = object.id;
-    this.title = object.title;
-    this.status = object.status;
-    this.total = object.total;
+  private _log(prop: string, value: any): void {
+    console.log('Setting property "' + prop + '" to "' + value + '"');
   }
 
 }
-

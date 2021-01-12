@@ -1,6 +1,6 @@
 <a routerLink="/">home</a>
 <h1>Requisition</h1>
-<p>{{req.title}}</p>
+<p>{{req?.title}}</p>
 
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
   <label for="title">Title:</label>
