@@ -20,6 +20,10 @@ export class EntityService<T> {
     private service: EntityCollectionService<T>,
   ) { }
 
+  connect(): Observable<T[]> {
+    return this.service.entities$;
+  }
+
   connectById(id: string): Observable<T> {
     return this.service.collection$.pipe(
       map(collection => {
@@ -34,6 +38,10 @@ export class EntityService<T> {
 
   save(obj: T): void {
     this.service.update(obj);
+  }
+
+  getAll(): void {
+    this.service.getAll();
   }
 
   getByKey(key: string): void {

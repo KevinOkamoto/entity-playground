@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
+import { EntityService, EntityServiceBuilderService } from 'src/app/service/entity-builder.service';
 import { Requisition } from '../../model/requisition.model';
 import { RequisitionService } from '../../service/requisition.service';
 
@@ -10,10 +11,13 @@ import { RequisitionService } from '../../service/requisition.service';
 })
 export class HomeComponent implements OnInit {
 
+  service: EntityService<Requisition>;
+
   requisitions$: Observable<Requisition[]>;
 
-  constructor(private requisitionService: RequisitionService ) {
-    this.requisitions$ = requisitionService.entities$;
+  constructor(private eb: EntityServiceBuilderService ) {
+    this.service = this.eb.create<Requisition>('Requisition');
+    this.requisitions$ = this.service.connect();
   }
 
   ngOnInit(): void {
@@ -21,7 +25,7 @@ export class HomeComponent implements OnInit {
   }
 
   getRequisitions(): void {
-    this.requisitionService.getAll();
+    this.service.getAll();
   }
 
 }
