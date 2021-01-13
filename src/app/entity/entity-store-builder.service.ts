@@ -12,7 +12,7 @@ export interface EntityChange<T> {
   value: any;
 }
 
-export class EntityService<T> {
+export class EntityStore<T> {
 
   public entityChange$: Subject<EntityChange<T>> = new Subject();
 
@@ -72,14 +72,14 @@ export class EntityService<T> {
 }
 
 @Injectable({ providedIn: 'root' })
-export class EntityServiceBuilderService {
+export class EntityStoreBuilderService {
 
   constructor(
     private ef: EntityCollectionServiceFactory,
   ) {}
 
-  create<T>(name: string): EntityService<T> {
+  create<T>(name: string): EntityStore<T> {
     const es = this.ef.create<T>(name);
-    return new EntityService<T>(es);
+    return new EntityStore<T>(es);
   }
 }

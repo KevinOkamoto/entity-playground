@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { EntityService, EntityServiceBuilderService } from 'src/app/service/entity-builder.service';
+import { EntityStore, EntityStoreBuilderService } from 'src/app/entity/entity-store-builder.service';
 import { Requisition } from '../../model/requisition.model';
 
 @Component({
@@ -10,13 +10,13 @@ import { Requisition } from '../../model/requisition.model';
 })
 export class HomeComponent implements OnInit {
 
-  service: EntityService<Requisition>;
+  store: EntityStore<Requisition>;
 
   requisitions$: Observable<Requisition[]>;
 
-  constructor(private eb: EntityServiceBuilderService ) {
-    this.service = this.eb.create<Requisition>('Requisition');
-    this.requisitions$ = this.service.connect();
+  constructor(private eb: EntityStoreBuilderService ) {
+    this.store = this.eb.create<Requisition>('Requisition');
+    this.requisitions$ = this.store.connect();
   }
 
   ngOnInit(): void {
@@ -24,7 +24,7 @@ export class HomeComponent implements OnInit {
   }
 
   getRequisitions(): void {
-    this.service.getAll();
+    this.store.getAll();
   }
 
 }
