@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Requisition } from 'src/app/model/requisition.model';
-import { EntityStore, EntityStoreBuilderService } from 'src/app/entity/entity-store-builder.service';
+import { EntityStore, EntityStoreBuilderService } from 'src/app/entity';
 
 @Component({
   selector: 'app-requisition',

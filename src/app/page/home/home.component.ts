@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { EntityStore, EntityStoreBuilderService } from 'src/app/entity/entity-store-builder.service';
+import { EntityStore, EntityStoreBuilderService } from 'src/app/entity';
 import { Requisition } from '../../model/requisition.model';
 
 @Component({

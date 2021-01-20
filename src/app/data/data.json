@@ -3,12 +3,11 @@
     {
       "id": "PR_001",
       "title": "My First Requisition",
-      "status": "draft",
-      "total": 10
+      "status": "draft"
     },
     {
       "id": "PR_002",
-      "title": "My Next Requisition",
+      "title": "My Second Requisition",
       "status": "draft",
       "total": 42
     }
